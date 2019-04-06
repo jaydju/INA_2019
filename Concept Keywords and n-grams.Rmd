@@ -274,7 +274,7 @@ probabilityCHEM = round(probabilityCHEM, digits = 2)
 probabilityPHYS = (PH / (CS + CH + PH)) * 100
 probabilityPHYS = round(probabilityPHYS, digits = 2)
 probability <- c(probabilityCS, probabilityCHEM, probabilityPHYS)
-labls <- c("Computer Science", "Chemistry", "Physics")
+labls <- c(paste("Computer Science ", probabilityCS,"%"), paste("Chemistry ", probabilityCHEM, "%"), paste("Physics", probabilityPHYS, "%"))
 par(mar=c(1,1,1,1))
 pie(probability, labels = labls, main="Topic Distribution")
 return(paste(CS, probabilityCS, CH, probabilityCHEM, PH, probabilityPHYS, topic))
@@ -315,11 +315,6 @@ testCHModel <- function(files){
   }
   print(topic)
   }
-  
 }
 
 ```
-
-Remove the Overlap Between Topics
-Check for the Journal ARticles
-Replace 
