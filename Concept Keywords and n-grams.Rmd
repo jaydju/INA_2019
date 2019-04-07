@@ -276,14 +276,17 @@ probabilityPHYS = round(probabilityPHYS, digits = 2)
 probability <- c(probabilityCS, probabilityCHEM, probabilityPHYS)
 labls <- c(paste("Computer Science ", probabilityCS,"%"), paste("Chemistry ", probabilityCHEM, "%"), paste("Physics", probabilityPHYS, "%"))
 par(mar=c(1,1,1,1))
-pie(probability, labels = labls, main="Topic Distribution")
+pie(probability, labels = labls, main="Topic Probability Distribution Likelihood")
 return(paste(CS, probabilityCS, CH, probabilityCHEM, PH, probabilityPHYS, topic))
 }
 ```
 
 Converting to a CSV
 ```{r}
-write.csv(all, "topics.csv")
+write.csv(uniqueCSKeywords, "uniqueCSKeywords.csv")
+write.csv(uniqueCHEMKeywords, "uniqueCHEMKeywords.csv")
+write.csv(uniquePHYSKeywords, "uniquePHYSKeywords.csv")
+
 ```
 
 Testing the Model for CS Accuracy
