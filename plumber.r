@@ -6,6 +6,18 @@ library(pdftools)
 library(tidyverse)
 library(plumber)
 
+uniqueCSKeywords <- read.csv("https://raw.githubusercontent.com/jaydju/INA_2019/master/uniqueCSKeywords.csv")
+uniqueCSKeywords <- uniqueCSKeywords[,2]
+uniqueCSKeywords <- as.character(uniqueCSKeywords)
+
+uniqueCHEMKeywords <- read.csv("https://raw.githubusercontent.com/jaydju/INA_2019/master/uniqueCHEMKeywords.csv")
+uniqueCHEMKeywords <- uniqueCHEMKeywords[,2]
+uniqueCHEMKeywords <- as.character(uniqueCHEMKeywords)
+
+uniquePHYSKeywords <- read.csv("https://raw.githubusercontent.com/jaydju/INA_2019/master/uniquePHYSKeywords.csv")
+uniquePHYSKeywords <- uniquePHYSKeywords[,2]
+uniquePHYSKeywords <- as.character(uniquePHYSKeywords)
+
 #' Echo the parameter that was sent in
 #' @param msg The message to echo back.
 #' @get /echo
@@ -47,7 +59,7 @@ tokenDataFrame <- function(abstract){
 #' @param abstract The pdf url.
 #' @get /topic
 function(abstract){
-  tokens <- tokenDataFrame(abstract)
+  tokens <- tokenDataFrame(pdf_text(abstract))
   CS = 0
   CH = 0
   PH = 0
@@ -85,9 +97,6 @@ function(abstract){
   probabilityPHYS = (PH / (CS + CH + PH)) * 100
   probabilityPHYS = round(probabilityPHYS, digits = 2)
   probability <- c(probabilityCS, probabilityCHEM, probabilityPHYS)
-  labls <- c(paste("Computer Science ", probabilityCS,"%"), paste("Chemistry ", probabilityCHEM, "%"), paste("Physics", probabilityPHYS, "%"))
-  par(mar=c(1,1,1,1))
-  pie(probability, labels = labls, main="Topic Probability Distribution Likelihood")
   return(paste(CS, probabilityCS, CH, probabilityCHEM, PH, probabilityPHYS, topic))
 }
 
